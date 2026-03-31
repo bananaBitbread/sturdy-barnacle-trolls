@@ -1,0 +1,2 @@
+# why's there a horse bro? how long is it?
+`javascript:(function(){fetch('https://cdn.jsdelivr.net/gh/bananabitbread/sturdy-barnacle-trolls@latest/horse/horse.txt').then(r=>r.text()).then(t=>{document.open();document.write('<body style="margin:0;background:#fff;font-family:monospace;white-space:pre;line-height:1;font-size:14px;overflow:auto;"><div style="width:380px;margin:0 auto;padding-top:222px;">'+t+'</div></body>');document.close();}).catch(e=>alert('CORS Error: This site blocks external horse loading. Try running it on a simpler page like google.com.'));})()`
