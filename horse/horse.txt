@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>hooooooooooooooooooooooooooooooooooooooooooooooooooooooooorse</title>
+    <style type="text/css">
+      pre { margin: 0; line-height: 1.2; }
+      .centered { width: 380px; margin: 0 auto; padding-top: 222px; }
+    </style>
+    <script type="text/javascript">
+      window.onload = function() {
+        const legsDiv = document.getElementById('legs');
+        const legSegment = "               | | | |             || |  '\n";
+
+        function addLegs() {
+          // Creating a new pre for each batch keeps them perfectly stacked
+          const newBatch = document.createElement('pre');
+          newBatch.textContent = legSegment.repeat(25);
+          legsDiv.appendChild(newBatch);
+        }
+
+        window.onscroll = function() {
+          if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 1000) {
+            addLegs();
+          }
+        };
+
+        addLegs(); // Start the infinite growth
+      };
+    </script>
+  </head>
+  <body>
+    <div class="centered">
+      <pre>   ,
+_,,)\.~,,._
+(()`  ``)\))),,_
+ |     \ ''((\)))),,_          ____
+ |6`   |   ''((\())) "-.____.-"    `-.-,
+ |    .'\    ''))))'                  \)))
+ |   |   `.     ''                     ((((
+ \, _)     \/                          |))))
+  `'        |                          (((((
+            \                  |       ))))))
+             `|    |           ,\     /((((((
+              |   / `-.______.<  \   |  )))))
+              |   |  /         `. \  \  ((((
+              |  / \ |           `.\  | (((
+              \  | | |             )| |  ))
+               | | | |             || |  '</pre>
+      <div id="legs"></div>
+    </div>
+  </body>
+</html>
