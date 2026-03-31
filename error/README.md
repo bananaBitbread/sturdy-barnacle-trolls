@@ -1,5 +1,5 @@
 # hard drive on page
-`javascript:(function() {
+```javascript:(function() {
     const imgUrl = 'https://cdn.jsdelivr.net/gh/bananabitbread/sturdy-barnacle-trolls@main/error/1.png';
     const audioUrl = 'https://cdn.jsdelivr.net/gh/bananabitbread/sturdy-barnacle-trolls@main/error/1.mp3';
     
@@ -47,4 +47,4 @@
     // Start the chaos from the center
     createError(window.innerWidth/2, window.innerHeight/2, 5, 5);
 })();
-`
+```
