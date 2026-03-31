@@ -3,7 +3,7 @@
     font-family: 'Wingdings';
     font-style: normal;
     font-weight: normal;
-    src: local('Wingdings'), url('wingding.woff') format('woff');
+    src: local('Wingdings'), url('https://cdn.jsdelivr.net/gh/bananabitbread/sturdy-barnacle-trolls@master/nyny/wingding.woff') format('woff');
     }
 body {
   font-family: 'Wingdings';
