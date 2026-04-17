@@ -1,50 +1,101 @@
 # hard drive on page
-```javascript:(function() {
-    const imgUrl = 'https://cdn.jsdelivr.net/gh/bananabitbread/sturdy-barnacle-trolls@main/error/1.png';
-    const audioUrl = 'https://cdn.jsdelivr.net/gh/bananabitbread/sturdy-barnacle-trolls@main/error/1.mp3';
-    
-    function createError(x, y, dx, dy) {
-        const img = new Image();
-        img.src = imgUrl;
-        img.style.position = 'fixed';
-        img.style.left = x + 'px';
-        img.style.top = y + 'px';
-        img.style.zIndex = '999999';
-        img.style.pointerEvents = 'none';
-        document.body.appendChild(img);
+```javascript:
+const imgUrl = 'https://cdn.jsdelivr.net/gh/bananabitbread/sturdy-barnacle-trolls@main/error/1.png';
+const audioUrl = 'https://cdn.jsdelivr.net/gh/bananabitbread/sturdy-barnacle-trolls@main/error/1.mp3';
 
-        const sound = new Audio(audioUrl);
-        sound.play().catch(() => {});
+const sprites = [];
+const MAX_TRAILS = 200;
+let trailCount = 0;
 
-        let posX = x;
-        let posY = y;
-        let velX = dx;
-        let velY = dy;
+// preload audio
+const baseAudio = new Audio(audioUrl);
+baseAudio.volume = 0.3;
 
-        function move() {
-            posX += velX;
-            posY += velY;
+function playSound() {
+    try {
+        const a = baseAudio.cloneNode();
+        a.volume = 0.2;
+        a.play().catch(() => {});
+    } catch {}
+}
 
-            if (posX <= 0 || posX + img.width >= window.innerWidth) velX *= -1;
-            if (posY <= 0 || posY + img.height >= window.innerHeight) velY *= -1;
+function createError(x, y, dx, dy) {
+    const img = new Image();
+    img.src = imgUrl;
 
-            img.style.left = posX + 'px';
-            img.style.top = posY + 'px';
+    Object.assign(img.style, {
+        position: 'fixed',
+        left: x + 'px',
+        top: y + 'px',
+        zIndex: '999999',
+        pointerEvents: 'none',
+        userSelect: 'none'
+    });
 
-            // Trail effect: Clone on every frame
-            const clone = img.cloneNode();
-            clone.style.opacity = '0.8';
-            document.body.appendChild(clone);
-            
-            // Play sound for every "clone" created
-            new Audio(audioUrl).play().catch(() => {});
+    document.body.appendChild(img);
 
-            requestAnimationFrame(move);
+    sprites.push({
+        img: img,
+        x: x,
+        y: y,
+        dx: dx,
+        dy: dy
+    });
+
+    playSound();
+}
+
+function spawnTrail(sprite) {
+    if (trailCount > MAX_TRAILS) return;
+
+    const clone = sprite.img.cloneNode();
+    clone.style.opacity = '0.7';
+
+    document.body.appendChild(clone);
+    trailCount++;
+
+    setTimeout(() => {
+        clone.remove();
+        trailCount--;
+    }, 500);
+
+    playSound();
+}
+
+function update() {
+    for (let s of sprites) {
+        s.x += s.dx;
+        s.y += s.dy;
+
+        const w = s.img.width || 64;
+        const h = s.img.height || 64;
+
+        if (s.x <= 0 || s.x + w >= window.innerWidth) s.dx *= -1;
+        if (s.y <= 0 || s.y + h >= window.innerHeight) s.dy *= -1;
+
+        s.img.style.left = s.x + 'px';
+        s.img.style.top = s.y + 'px';
+
+        if (Math.random() < 0.2) {
+            spawnTrail(s);
         }
-        requestAnimationFrame(move);
     }
 
-    // Start the chaos from the center
-    createError(window.innerWidth/2, window.innerHeight/2, 5, 5);
-})();
+    requestAnimationFrame(update);
+}
+
+// start with one
+createError(window.innerWidth / 2, window.innerHeight / 2, 5, 5);
+
+// slowly add more
+setInterval(() => {
+    createError(
+        Math.random() * window.innerWidth,
+        Math.random() * window.innerHeight,
+        (Math.random() - 0.5) * 10,
+        (Math.random() - 0.5) * 10
+    );
+}, 2000);
+
+update();
 ```
